@@ -1,0 +1,29 @@
+@import './colors';
+
+.App {
+  text-align: center;
+}
+
+body {
+  font-family: Garamond;
+}
+
+html {
+  overflow-y: hidden;
+}
+
+.neu-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 5px 15px;
+  background-color: $highlight;
+  box-shadow: -3px -3px 3px rgba(255, 255, 255, 1),
+  3px 3px 3px $t-highlight;
+  color: #FFF;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: -3px -3px 3px rgba(255, 255, 255, 1),
+    4px 4px 3px $t-highlight;
+  }
+}

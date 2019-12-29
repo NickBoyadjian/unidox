@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect  } from 'react-router-dom';
-import './App.css';
+import {  Route, Redirect  } from 'react-router-dom';
+import './App.scss';
 import Login from './components/login'
 import userGlobal from './state/userState'
 import Dashboard from './components/dashboard';
@@ -21,12 +20,12 @@ function App() {
 
   const [userState, userActions] = userGlobal();
 
-  if(userState.jwt != '') {
+  if(userActions.isLoggedIn()) {
     return (
       <Fragment>
           <Route path="/dashboard" exact component={Dashboard} />
           <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
-    </Fragment>
+      </Fragment>
     )
   } else {
     return (
