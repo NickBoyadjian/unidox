@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  convertToRaw,
+  convertFromRaw
+} from 'draft-js';
 
+import BlockStyleControls from './blockStyleControls'
+import InlineStyleControls from './inlineStyleControls'
+import userGlobal from '../../state/userState'
+import './style.scss'
 
 export default class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
-    this.handleKeyCommand = (command) => this._handleKeyCommand(command);
+    this.onChange = (editorState) => {
+      this.setState({editorState})
+      console.log(editorState)
+    };
+    this.handleKeyCommand = (command) => this._handleKeyCommand();
+    this.saveDocument = () => this._saveDocument();
     this.onTab = (e) => this._onTab(e);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
@@ -22,6 +36,12 @@ export default class TextEditor extends Component {
       return true;
     }
     return false;
+  }
+
+  _saveDocument() {
+    const [userState, userActions] = userGlobal();
+    console.log(this.state.editorState)
+    userActions.updateNote(this.state.editorState)
   }
 
   _onTab(e) {
@@ -51,24 +71,35 @@ export default class TextEditor extends Component {
     }
     return (
       <div>
-        <div className="RichEditor-root">
+        <div className='toolbar'>
           <BlockStyleControls
-            editorState={editorState}
-            onToggle={this.toggleBlockType}
-          />
-          <InlineStyleControls
-            editorState={editorState}
-            onToggle={this.toggleInlineStyle}
-          />
+              editorState={editorState}
+              onToggle={this.toggleBlockType}
+            />
+            <InlineStyleControls
+              editorState={editorState}
+              onToggle={this.toggleInlineStyle}
+            />
+
+            <button 
+              className='style-btn save button is-light'
+              onClick={this.saveDocument}
+            >
+              Save
+            </button>
+
+        </div>
+        <div className="RichEditor-root">
           <div className={className} onClick={this.focus}>
             <Editor
+              className='editor'
               blockStyleFn={getBlockStyle}
               customStyleMap={styleMap}
               editorState={editorState}
               handleKeyCommand={this.handleKeyCommand}
               onChange={this.onChange}
               onTab={this.onTab}
-              placeholder="Tell a story..."
+              placeholder=""
               ref="editor"
               spellCheck={true}
             />
@@ -96,98 +127,3 @@ function getBlockStyle(block) {
       return null;
   }
 }
-
-class StyleButton extends React.Component {
-  constructor() {
-    super();
-    this.onToggle = (e) => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
-  render() {
-    let className = 'RichEditor-styleButton';
-    if (this.props.active) {
-      className += ' RichEditor-activeButton';
-    }
-    return (
-      <span className={className} onMouseDown={this.onToggle}>
-        {this.props.label}
-      </span>
-    );
-  }
-}
-
-const BLOCK_TYPES = [
-  {
-    label: 'Title',
-    style: 'header-one'
-  }, {
-    label: 'Section',
-    style: 'header-two'
-  }, {
-    label: 'Blockquote',
-    style: 'blockquote'
-  }, {
-    label: 'UL',
-    style: 'unordered-list-item'
-  }, {
-    label: 'OL',
-    style: 'ordered-list-item'
-  }, {
-    label: 'Code Block',
-    style: 'code-block'
-  }
-];
-
-const BlockStyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType();
-  return (
-    <div className="RichEditor-controls">
-      {BLOCK_TYPES.map(
-        (type) => <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-        />
-      )}
-    </div>
-  );
-};
-
-const INLINE_STYLES = [
-  {
-    label: 'Bold',
-    style: 'BOLD'
-  }, {
-    label: 'Italic',
-    style: 'ITALIC'
-  }, {
-    label: 'Underline',
-    style: 'UNDERLINE'
-  }, {
-    label: 'Monospace',
-    style: 'CODE'
-  }
-];
-
-const InlineStyleControls = (props) => {
-  var currentStyle = props.editorState.getCurrentInlineStyle();
-  return (
-    <div className="RichEditor-controls">
-      {INLINE_STYLES.map(
-        type => <StyleButton
-          key={type.label}
-          active={currentStyle.has(type.style)}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-        />
-      )}
-    </div>
-  );
-};

@@ -1,42 +1,12 @@
 @import '../../colors';
 
-.left-menu {
-    position: relative;
-    background-color: #eee;
-    width: 100%;
-    height: (100vh);
-    font-family: Arial;
+
+.panel {
+    height: calc(100vh - 64px);
+    border-radius: 0;
 }
 
-.greeter {
-    font-size: 20px;
-    text-align: center;
-    padding: 20px 20px;
-}
 
-.notes {
-    list-style-type: none;
-}
-
-.notes > li {
-    width: 80%;
-    margin: 5px auto 15px auto;
-    border: none;
-    border-radius: 3px;
-    padding: 5px 15px;
-    background-color: #eee;
-    box-shadow: -3px -3px 3px rgba(255, 255, 255, 1),
-    3px 3px 3px rgba(0, 0, 0, 0.3);
-    color: $text;
-    
-    &:hover {
-        cursor: pointer;
-        box-shadow: -3px -3px 3px rgba(255, 255, 255, 1),
-        4px 4px 3px rgba(0, 0, 0, 0.3);
-    }
-}
-
-.notes > .active {
-    background-color: $highlight;
-    color: white
+.note:hover {
+    cursor: pointer;
 }

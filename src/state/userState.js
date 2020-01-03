@@ -6,7 +6,12 @@ const initialState = {
     username: '',
     notes: [],
     jwt: '',
-    authError: ''
+    authError: '',
+    currentNote: {
+        id: 1,
+        title: '',
+        body: {}
+    }
 };
 
  
@@ -38,9 +43,24 @@ const actions = {
     },
 
     getNote: (store, id) => {
-        let note;
         axios.get('http://localhost:3100/notes/note/' + id, {headers: {Authorization: store.state.jwt}})
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res)
+            store.setState({currentNote: {id: res.data.id, title: res.data.title, body: res.data.title}})
+        })
+    },
+
+    createNote: async (store, title) => {
+        await axios.post('http://localhost:3100/notes/createnote', {title: title, body: JSON.stringify({})}, {headers: {Authorization: store.state.jwt}})
+        .then(res => {
+            store.setState({ currentNote: {id: res.id, title: res.title, body: res.body}}) // store it in state
+        })
+        .catch(err => store.setState({authError: err.response.data.msg}))
+    },
+
+    updateNote: (store, body) => {
+        axios.put("http://localhost:3100/notes/note/" + store.currentNote.id, {body: JSON.stringify(body)}, {headers: {Authorization: store.state.jwt}})
+        .then(res => store.setState({currentNote: {id: res.id, title: res.title, body: res.body}}))
     }
 
 };

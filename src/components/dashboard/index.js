@@ -12,7 +12,6 @@ import './style.scss'
 const Dashboard = () => {
 
     const [userState, userActions] = userGlobal()
-    const [activeNote, setActiveNote] = useState(3)
 
     useEffect(() => {
         if (userState.jwt === '') {
@@ -26,10 +25,12 @@ const Dashboard = () => {
     return (
         <div className='dashboard'>
             <NavBar />
-            <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
-                <LeftMenu activeNote={activeNote}  setActiveNote={setActiveNote}/>
-                <div className='editor-container'> <TextEditor activeNote={activeNote} setActiveNote={setActiveNote} /> </div>
-            </SplitterLayout>
+            <div className='editor-pane'>
+                <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
+                    <LeftMenu/>
+                    <div className='editor-container'> <TextEditor /> </div>
+                </SplitterLayout>
+            </div>
         </div>
     );
 }

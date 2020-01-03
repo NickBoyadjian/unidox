@@ -1,39 +1,6 @@
 @import '../../colors';
-
-nav {
-    background: $bg;
-    color: $text;
-    height: 50px;
-    font-family: Arial;
-
-    .left-side {
-        vertical-align: middle;
-        display: inline;
-    }
-
-    .left-side > li {
-        padding: 0 15px;
-        font-size: 20px;
-        display: inline;
-        line-height: 50px;
-    }
-
-    i {
-        padding-right: 10px;
-    }
-
-    .right-side {
-        display: inline;
-        float: right;
-        vertical-align: middle;
-        line-height: 50px;
-        padding-right: 10px;
-    }
-}
-
-.bottom-gradient {
+.navbar {
+    position: fixed;
+    top: 0;
     width: 100vw;
-    height: 1px;
-    background: $highlight;
-}
-  
+}  

@@ -1,8 +1,65 @@
-.editor {
+// .editor {
+//     display: inline;
+// }
+
+// .public-DraftStyleDefault-block, .public-DraftStyleDefault-ltr {
+//     display: inline;
+// }
+
+.RichEditor-controls {
     display: inline;
-    background-color: red;
 }
 
-.public-DraftStyleDefault-block, .public-DraftStyleDefault-ltr {
-    display: inline;
+.style-btn {
+    border-radius: 0;
+    box-shadow: none;
+    height: 47px;
+    margin: 0 5px;
 }
+
+
+
+div.DraftEditor-root {
+    width: 100%;
+    margin: auto;
+    height: calc(100vh - 114px);
+    overflow-y: scroll;
+    padding: 20px;
+    font-size: 18px;
+    font-family: 'calibri', sans-serif;
+
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  
+  div.DraftEditor-editorContainer {
+    margin-top:5px;
+  }
+  
+  div.toolbar {
+    position: relative;
+    border-bottom: 2px solid #ddd;
+    margin: auto;
+    text-align: left;
+
+    .save {
+      position: absolute;
+      right: 0;
+      width: 100px;
+    }
+  }
+  
+  div.toolbar button {
+    border: 1px solid black;
+    padding: 5px;
+    margin-right: 4px;
+    background-color:black;
+    color:white;
+  }

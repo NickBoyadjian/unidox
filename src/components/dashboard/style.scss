@@ -1,3 +1,10 @@
-.editor-container {
-    padding: 0 5px;
+.dashboard {
+    overflow: hidden;
+}
+
+.editor-pane {
+    position: fixed;
+    top: 64px;
+    width: 100vw;
+    height: calc(100vh - 64px);
 }

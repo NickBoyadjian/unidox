@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import userGlobal from '../../state/userState'
-import Resizable from 'react-resizable-box'
 
+import CreateNote from '../createNote'
 import './style.scss'
 
 const LeftMenu = (props) => {
@@ -19,19 +19,52 @@ const LeftMenu = (props) => {
         }
     });
 
+    const showModal = () => {
+        const modal = document.getElementById('create-note')
+        modal.className = 'modal is-active'
+    }
+
+
     return (
             <div className='left-menu'>
-                <div className='greeter'>
-                    {userState.username}'s notes
-                </div>
-                <div className='notes'>
+                <nav class="panel is-link">
+                    <h1 class="panel-heading">
+                        Notes
+                    </h1>
+                    <div class="panel-block">
+                        <button class="button is-link is-outlined is-fullwidth" onClick={showModal}>
+                        Create new note
+                        </button>
+                    </div>
+                    <CreateNote />
+                    <div class="panel-block">
+                        <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Search" />
+                        <span class="icon is-left">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </span>
+                        </p>
+                    </div>
+
                     {
-                        userState.notes.map(note => props.activeNote == note.id
-                                                        ? <li className='active' key={note.id}> {note.title} </li> 
-                                                        : <li onClick={() => props.setActiveNote(note.id)} key={note.id}> {note.title} </li> 
+                        userState.notes.map(note => userState.currentNote.id == note.id
+                                    ? <div class="panel-block is-active note">
+                                        <span class="panel-icon">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                        </span>
+                                        {note.title}
+                                    </div>
+                                    : <div class="panel-block note" onClick={() => userActions.getNote(note.id)}>
+                                        <span class="panel-icon">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                        </span>
+                                        {note.title}
+                                    </div>
                         )
                     }
-                </div>
+                    
+                    
+                </nav>
             </div>
     );
 }
