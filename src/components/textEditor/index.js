@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
   Editor,
   EditorState,
@@ -12,102 +12,103 @@ import InlineStyleControls from './inlineStyleControls'
 import userGlobal from '../../state/userState'
 import './style.scss'
 
-export default class TextEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => {
-      this.setState({editorState})
-      console.log(editorState)
-    };
-    this.handleKeyCommand = (command) => this._handleKeyCommand();
-    this.saveDocument = () => this._saveDocument();
-    this.onTab = (e) => this._onTab(e);
-    this.toggleBlockType = (type) => this._toggleBlockType(type);
-    this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
-  }
+export default () => {
 
-  _handleKeyCommand(command) {
-    const {editorState} = this.state;
+  const [userState, userActions] = userGlobal();
+  const [editorState, setEditorState] = React.useState( EditorState.createEmpty() );
+
+  const handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
-      this.onChange(newState);
+      setEditorState(newState);
       return true;
     }
     return false;
   }
 
-  _saveDocument() {
-    const [userState, userActions] = userGlobal();
-    console.log(this.state.editorState)
-    userActions.updateNote(this.state.editorState)
+  useEffect(async () => {
+      await userActions.getNote(userState.currentNote.id)
+      console.log(userState.currentNote.body)
+  }, []);
+
+  // componentDidMount() {
+  //   // Load editor data (raw js object) from local storage
+  //   const rawEditorData = this.getSavedEditorData();
+  //   if (rawEditorData !== null) {
+  //     const contentState = convertFromRaw(rawEditorData);
+  //     this.setState({
+  //       editorState: EditorState.createWithContent(contentState)
+  //     });
+  //   }
+  // }
+
+  const saveDocument = () => {
+    userActions.updateNote(editorState)
   }
 
-  _onTab(e) {
+  const onTab = (e) => {
     const maxDepth = 4;
-    this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
+    setEditorState(RichUtils.onTab(e, editorState, maxDepth));
   }
 
-  _toggleBlockType(blockType) {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+  const toggleBlockType = (blockType) => {
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
   }
 
-  _toggleInlineStyle(inlineStyle) {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
+  const toggleInlineStyle = (inlineStyle) => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   }
 
-  render() {
-    const { editorState } = this.state;
-
-    // If the user changes block type before entering any text, we can
-    // either style the placeholder or hide it. Let's just hide it now.
-    let className = 'RichEditor-editor';
-    var contentState = editorState.getCurrentContent();
-    if (!contentState.hasText()) {
-      if (contentState.getBlockMap().first().getType() !== 'unstyled') {
-        className += ' RichEditor-hidePlaceholder';
-      }
+  // If the user changes block type before entering any text, we can
+  // either style the placeholder or hide it. Let's just hide it now.
+  let className = 'RichEditor-editor';
+  var contentState = editorState.getCurrentContent();
+  if (!contentState.hasText()) {
+    if (contentState.getBlockMap().first().getType() !== 'unstyled') {
+      className += ' RichEditor-hidePlaceholder';
     }
-    return (
-      <div>
-        <div className='toolbar'>
-          <BlockStyleControls
-              editorState={editorState}
-              onToggle={this.toggleBlockType}
-            />
-            <InlineStyleControls
-              editorState={editorState}
-              onToggle={this.toggleInlineStyle}
-            />
+  }
+  return (
+    <div>
+      <div className='toolbar'>
+        <BlockStyleControls
+            editorState={editorState}
+            onToggle={toggleBlockType}
+          />
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={toggleInlineStyle}
+          />
 
-            <button 
-              className='style-btn save button is-light'
-              onClick={this.saveDocument}
-            >
-              Save
-            </button>
+          <button 
+            className='style-btn save button is-light'
+            onClick={saveDocument}
+          >
+            Save
+          </button>
 
-        </div>
-        <div className="RichEditor-root">
-          <div className={className} onClick={this.focus}>
-            <Editor
-              className='editor'
-              blockStyleFn={getBlockStyle}
-              customStyleMap={styleMap}
-              editorState={editorState}
-              handleKeyCommand={this.handleKeyCommand}
-              onChange={this.onChange}
-              onTab={this.onTab}
-              placeholder=""
-              ref="editor"
-              spellCheck={true}
-            />
-          </div>
+      </div>
+      <div className="RichEditor-root">
+        <div 
+        className={className} 
+        //onClick={focus}
+        >
+          <Editor
+            className='editor'
+            blockStyleFn={getBlockStyle}
+            customStyleMap={styleMap}
+            editorState={editorState}
+            handleKeyCommand={handleKeyCommand}
+            onChange={setEditorState}
+            onTab={onTab}
+            placeholder=""
+            //ref="editor"
+            spellCheck={true}
+          />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 // Custom overrides for "code" style.
 const styleMap = {
