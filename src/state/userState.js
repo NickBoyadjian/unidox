@@ -1,6 +1,13 @@
 import React from 'react'
 import globalHook from 'use-global-hook'
 import axios from 'axios'
+import {
+    Editor,
+    EditorState,
+    RichUtils,
+    convertToRaw,
+    convertFromRaw
+  } from 'draft-js';
  
 const initialState = {
     username: '',
@@ -8,9 +15,9 @@ const initialState = {
     jwt: '',
     authError: '',
     currentNote: {
-        id: 1,
-        title: '',
-        body: {}
+        id: undefined,
+        title: undefined,
+        body: undefined
     }
 };
 
@@ -50,7 +57,7 @@ const actions = {
     },
 
     createNote: async (store, title) => {
-        return axios.post('http://localhost:3100/notes/createnote', {title: title, body: JSON.stringify({})}, {headers: {Authorization: store.state.jwt}})
+        return axios.post('http://localhost:3100/notes/createnote', {title: title, body: (convertToRaw(EditorState.createEmpty().getCurrentContent()))}, {headers: {Authorization: store.state.jwt}})
         .then(res => {
             store.setState({ currentNote: {id: res.id, title: res.title, body: res.body}}) // store it in state
         })
@@ -58,12 +65,11 @@ const actions = {
     },
 
     updateNote: (store, body) => {
-        return axios.put(
+        axios.put(
             "http://localhost:3100/notes/note/" + store.state.currentNote.id, 
-            {body: JSON.stringify(body)}, 
+            {body: convertToRaw(body.getCurrentContent())}, 
             {headers: {Authorization: store.state.jwt}}
         )
-        .then(res => store.setState({currentNote: {id: res.id, title: res.title, body: res.body}}))
     }
 };
  

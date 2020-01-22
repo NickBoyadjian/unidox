@@ -26,11 +26,6 @@ export default () => {
     return false;
   }
 
-  useEffect(async () => {
-      await userActions.getNote(userState.currentNote.id)
-      console.log(userState.currentNote.body)
-  }, []);
-
   // componentDidMount() {
   //   // Load editor data (raw js object) from local storage
   //   const rawEditorData = this.getSavedEditorData();
@@ -42,7 +37,23 @@ export default () => {
   //   }
   // }
 
+  useEffect(() => {
+    console.log(userState.currentNote)
+    if (userState.currentNote.body) {
+      let state;
+      if (userState.currentNote.body.body) {
+        state = EditorState.createWithContent(convertFromRaw(userState.currentNote.body.body));
+      } else {
+        state = EditorState.createWithContent(convertFromRaw(userState.currentNote.body));
+      }
+      setEditorState(state)
+    } else {
+      setEditorState(RichUtils.createEmpty());
+    }
+  }, [userState.currentNote.id]);
+
   const saveDocument = () => {
+    console.log(editorState)
     userActions.updateNote(editorState)
   }
 
@@ -109,6 +120,7 @@ export default () => {
       </div>
     </div>
   );
+
 }
 // Custom overrides for "code" style.
 const styleMap = {

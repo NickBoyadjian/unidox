@@ -22,17 +22,31 @@ const Dashboard = () => {
         }
     });
 
-    return (
-        <div className='dashboard'>
-            <NavBar />
-            <div className='editor-pane'>
-                <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
-                    <LeftMenu/>
-                    <div className='editor-container'> <TextEditor /> </div>
-                </SplitterLayout>
+    if (userState.currentNote.body == undefined) {
+        return (
+            <div className='dashboard'>
+                <NavBar />
+                <div className='editor-pane'>
+                    <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
+                        <LeftMenu/>
+                        <div className='editor-container'> Pick a note </div>
+                    </SplitterLayout>
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className='dashboard'>
+                <NavBar />
+                <div className='editor-pane'>
+                    <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
+                        <LeftMenu/>
+                        <div className='editor-container'> <TextEditor /> </div>
+                    </SplitterLayout>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default Dashboard;
