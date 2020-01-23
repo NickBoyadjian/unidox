@@ -6,7 +6,7 @@ const Login = () => {
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [userState, userActions] = userGlobal();
+    const [ userState, userActions] = userGlobal();
 
     const handleLogin = async e => {
         e.preventDefault()

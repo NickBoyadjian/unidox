@@ -22,28 +22,10 @@ const NavBar = () => {
             </div>
 
             <div class="navbar-menu">
-                <div class="navbar-start">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                        File
-                        </a>
+                
+                <Menu />
 
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                Save
-                            </a>
-                            <a class="navbar-item">
-                                Download
-                            </a>
-                            <hr class="navbar-divider" />
-                            <a class="navbar-item">
-                                Report an issue
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-item has-dropdown is-hoverable navbar-end">
                     <div class="navbar-link" id='account'>Account</div>
 
                     <div class="navbar-dropdown is-right">
@@ -58,6 +40,39 @@ const NavBar = () => {
             </div>
         </nav>
     );
+}
+
+const Menu = () => {
+
+    const [userState, userActions] = userGlobal();
+
+
+    if (!userState.currentNote.id) {
+        return <div></div>
+    }
+
+    return (
+        <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                File
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        Download
+                    </a>
+                    <a class="navbar-item" onClick={() => userActions.deleteNote(userState.currentNote.id).then(r => userActions.getProfile())}>
+                        Delete
+                    </a>
+                    <hr class="navbar-divider" />
+                    <a class="navbar-item">
+                        Report an issue
+                    </a>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default NavBar;

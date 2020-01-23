@@ -22,7 +22,7 @@ const Dashboard = () => {
         }
     });
 
-    if (userState.currentNote.body == undefined) {
+    if (!userState.currentNote.body) {
         return (
             <div className='dashboard'>
                 <NavBar />

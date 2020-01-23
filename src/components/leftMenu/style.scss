@@ -10,3 +10,15 @@
 .note:hover {
     cursor: pointer;
 }
+
+.trash {
+    color: red;
+    text-align: right;
+    float: right;
+    position: absolute;
+    right: 10px;
+}
+
+.is-active {
+    background-color: $bg;
+}

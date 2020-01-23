@@ -56,6 +56,11 @@ const actions = {
         })
     },
 
+    deleteNote: async (store, id) => {
+        return await axios.delete('http://localhost:3100/notes/note/' + id, {headers: {Authorization: store.state.jwt}})
+        .then(res => store.setState({ currentNote: { id: undefined, title: undefined, body: undefined }}))
+    },
+
     createNote: async (store, title) => {
         return axios.post('http://localhost:3100/notes/createnote', {title: title, body: (convertToRaw(EditorState.createEmpty().getCurrentContent()))}, {headers: {Authorization: store.state.jwt}})
         .then(res => {
