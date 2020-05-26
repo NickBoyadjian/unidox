@@ -2,11 +2,8 @@ import React from 'react'
 import globalHook from 'use-global-hook'
 import axios from 'axios'
 import {
-    Editor,
     EditorState,
-    RichUtils,
     convertToRaw,
-    convertFromRaw
   } from 'draft-js';
  
 const initialState = {

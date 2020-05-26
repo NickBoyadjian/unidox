@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import userGlobal from '../../state/userState'
 
 import './style.scss'
@@ -8,32 +8,32 @@ const NavBar = () => {
     const [userState, userActions] = userGlobal();
 
     return (
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <div class="navbar-item" href="https://bulma.io">
+        <nav className="navbar" role="navigation" aria-label="main navigation">
+            <div className="navbar-brand">
+                <div className="navbar-item" href="https://bulma.io">
                     {userState.username.charAt(0).toUpperCase() + userState.username.slice(1)}
                 </div>
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 </a>
             </div>
 
-            <div class="navbar-menu">
+            <div className="navbar-menu">
                 
                 <Menu />
 
-                <div class="navbar-item has-dropdown is-hoverable navbar-end">
-                    <div class="navbar-link" id='account'>Account</div>
+                <div className="navbar-item has-dropdown is-hoverable navbar-end">
+                    <div className="navbar-link" id='account'>Account</div>
 
-                    <div class="navbar-dropdown is-right">
-                        <a class="navbar-item"> Settings </a>
-                        <a class="navbar-item"> Components </a>
-                        <hr class="navbar-divider" />
-                        <div class="navbar-item">
-                            <button class="navbar-item button" onClick={userActions.logout}> Log out </button>
+                    <div className="navbar-dropdown is-right">
+                        <a className="navbar-item"> Settings </a>
+                        <a className="navbar-item"> Components </a>
+                        <hr className="navbar-divider" />
+                        <div className="navbar-item">
+                            <button className="navbar-item button" onClick={userActions.logout}> Log out </button>
                         </div>
                     </div>
                 </div>

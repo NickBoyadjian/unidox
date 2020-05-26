@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import userGlobal from '../../state/userState'
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -29,7 +29,7 @@ const Dashboard = () => {
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
                         <LeftMenu/>
-                        <div className='editor-container'> Pick a note </div>
+                        <div className='pick-note'> Select a note </div>
                     </SplitterLayout>
                 </div>
             </div>

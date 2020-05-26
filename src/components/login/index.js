@@ -6,6 +6,7 @@ const Login = () => {
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+
     const [ userState, userActions] = userGlobal();
 
     const handleLogin = async e => {
@@ -14,10 +15,10 @@ const Login = () => {
     }
 
     useEffect(() => {
-        if (userState.jwt != '') {
+        if (userState.jwt !== '') {
             userActions.getToken()
         }
-    });
+    }, []);
 
     return (
         <div className='container login'>

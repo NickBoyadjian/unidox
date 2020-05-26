@@ -1,9 +1,8 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Editor,
   EditorState,
   RichUtils,
-  convertToRaw,
   convertFromRaw
 } from 'draft-js';
 
