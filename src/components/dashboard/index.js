@@ -1,4 +1,4 @@
-import React, {  useEffect } from 'react'
+import React, { useEffect } from 'react'
 import userGlobal from '../../state/userState'
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -9,18 +9,18 @@ import TextEditor from '../textEditor'
 
 import './style.scss'
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
     const [userState, userActions] = userGlobal()
 
     useEffect(() => {
         if (userState.jwt === '') {
-            userActions.getToken()
+            userActions.getToken();
         }
         if (userState.username === '') {
-            userActions.getProfile()
+            userActions.getProfile();
         }
-    });
+    }, []);
 
     if (!userState.currentNote.body) {
         return (
@@ -28,7 +28,7 @@ const Dashboard = () => {
                 <NavBar />
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
-                        <LeftMenu/>
+                        <LeftMenu />
                         <div className='pick-note'> Select a note </div>
                     </SplitterLayout>
                 </div>
@@ -40,7 +40,7 @@ const Dashboard = () => {
                 <NavBar />
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
-                        <LeftMenu/>
+                        <LeftMenu />
                         <div className='editor-container'> <TextEditor /> </div>
                     </SplitterLayout>
                 </div>

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react"
-import userGlobal from '../../state/userState'
-import './style.scss'
-import bgimage from '../../images/bg.svg';
+import React, { useState, useEffect } from 'react';
+import userGlobal from '../../state/userState';
 
-const Login = () => {
+const Signup = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +10,7 @@ const Login = () => {
 
     const handleLogin = async e => {
         e.preventDefault()
-        await userActions.login(username, password)
+        await userActions.signup(username, password)
     }
 
     useEffect(() => {
@@ -23,11 +21,9 @@ const Login = () => {
 
     return (
         <>
-            <h1 className="appname">Note Keeper</h1>
-            <img className="bgimage" src={bgimage} />
             <div className='container login card'>
                 <form onSubmit={handleLogin}>
-                    <h1>Sign In</h1>
+                    <h1>Sign Up</h1>
                     <div className="field">
                         <label className="label">Username</label>
                         <div className="control has-icons-left has-icons-right">
@@ -74,4 +70,4 @@ const Login = () => {
     );
 }
 
-export default Login
+export default Signup

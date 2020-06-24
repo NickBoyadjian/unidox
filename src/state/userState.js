@@ -4,8 +4,10 @@ import axios from 'axios'
 import {
     EditorState,
     convertToRaw,
-  } from 'draft-js';
- 
+} from 'draft-js';
+
+const url = 'https://noteshareapi.herokuapp.com';
+
 const initialState = {
     username: '',
     notes: [],
@@ -18,20 +20,29 @@ const initialState = {
     }
 };
 
- 
+
 const actions = {
 
     login: (store, u, p) => {
-        axios.post('http://localhost:3100/auth/signin', { "username": u, "password": p })
-        .then(res => {
-            store.setState({ jwt: res.data.token, authError: ''}) // store it in state
-            localStorage.setItem('token', res.data.token)         // store it in localStorage
-        })
-        .catch(err => store.setState({authError: err.response.data.msg}))
+        axios.post(`${url}/auth/signin`, { "username": u, "password": p })
+            .then(res => {
+                store.setState({ jwt: res.data.token, authError: '' }) // store it in state
+                localStorage.setItem('token', res.data.token)         // store it in localStorage
+            })
+            .catch(err => store.setState({ authError: err.response.data.msg }))
+    },
+
+    signup: (store, u, p) => {
+        axios.post(`${url}/auth/signup`, { "username": u, "password": p })
+            .then(res => {
+                store.setState({ jwt: res.data.token, authError: '' }) // store it in state
+                localStorage.setItem('token', res.data.token)         // store it in localStorage
+            })
+            .catch(err => store.setState({ authError: err.response.data.msg }))
     },
 
     logout: (store) => {
-        store.setState({jwt: ''})
+        store.setState(initialState)
         localStorage.removeItem('token')
     },
 
@@ -39,42 +50,43 @@ const actions = {
         return localStorage.getItem('token') === null ? false : true
     },
 
-    getToken: (store) => store.setState({jwt: localStorage.getItem('token')}),
+    getToken: (store) => store.setState({ jwt: localStorage.getItem('token') }),
 
     getProfile: (store) => {
-        axios.get('http://localhost:3100/auth/profile', {headers: {Authorization: store.state.jwt}})
-        .then(res => store.setState({username: res.data.username, notes: res.data.notes}))
+        store.setState({ jwt: localStorage.getItem('token') })
+        axios.get(`${url}/auth/profile`, { headers: { Authorization: store.state.jwt } })
+            .then(res => store.setState({ username: res.data.username, notes: res.data.notes }))
     },
 
     getNote: async (store, id) => {
-        await axios.get('http://localhost:3100/notes/note/' + id, {headers: {Authorization: store.state.jwt}})
-        .then(res => {
-            store.setState({currentNote: {id: res.data.id, title: res.data.title, body: res.data.body}})
-        })
+        await axios.get(`${url}/notes/note/${id}`, { headers: { Authorization: store.state.jwt } })
+            .then(res => {
+                store.setState({ currentNote: { id: res.data.id, title: res.data.title, body: res.data.body } })
+            })
     },
 
     deleteNote: async (store, id) => {
-        return await axios.delete('http://localhost:3100/notes/note/' + id, {headers: {Authorization: store.state.jwt}})
-        .then(res => store.setState({ currentNote: { id: undefined, title: undefined, body: undefined }}))
+        return await axios.delete(`${url}/notes/note/${id}`, { headers: { Authorization: store.state.jwt } })
+            .then(res => store.setState({ currentNote: { id: undefined, title: undefined, body: undefined } }))
     },
 
     createNote: async (store, title) => {
-        return axios.post('http://localhost:3100/notes/createnote', {title: title, body: (convertToRaw(EditorState.createEmpty().getCurrentContent()))}, {headers: {Authorization: store.state.jwt}})
-        .then(res => {
-            store.setState({ currentNote: {id: res.id, title: res.title, body: res.body}}) // store it in state
-        })
-        .catch(err => store.setState({authError: err.response.data.msg}))
+        return axios.post(`${url}/notes/createnote`, { title: title, body: (convertToRaw(EditorState.createEmpty().getCurrentContent())) }, { headers: { Authorization: store.state.jwt } })
+            .then(res => {
+                store.setState({ currentNote: { id: res.id, title: res.title, body: res.body } }) // store it in state
+            })
+            .catch(err => store.setState({ authError: err.response.data.msg }))
     },
 
     updateNote: (store, body) => {
         axios.put(
-            "http://localhost:3100/notes/note/" + store.state.currentNote.id, 
-            {body: convertToRaw(body.getCurrentContent())}, 
-            {headers: {Authorization: store.state.jwt}}
+            `${url}/notes/note/${store.state.currentNote.id}`,
+            { body: convertToRaw(body.getCurrentContent()) },
+            { headers: { Authorization: store.state.jwt } }
         )
     }
 };
- 
+
 const useGlobal = globalHook(React, initialState, actions)
 
 export default useGlobal
