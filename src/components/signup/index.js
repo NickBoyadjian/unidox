@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import userGlobal from '../../state/userState';
+import React, { useState, useEffect } from "react"
+import { Link } from 'react-router-dom';
+import userGlobal from '../../state/userState'
+import bgimage from '../../images/bg.svg';
 
 const Signup = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const [userState, userActions] = userGlobal();
 
-    const handleLogin = async e => {
+    const handleSignup = async e => {
         e.preventDefault()
-        await userActions.signup(username, password)
+        await userActions.signup(username, password, confirmPassword)
     }
 
     useEffect(() => {
@@ -21,9 +24,11 @@ const Signup = () => {
 
     return (
         <>
+            <h1 className="appname">Note Keeper</h1>
+            <img className="bgimage" src={bgimage} />
             <div className='container login card'>
-                <form onSubmit={handleLogin}>
-                    <h1>Sign Up</h1>
+                <form onSubmit={handleSignup}>
+                    <h1>Sign In</h1>
                     <div className="field">
                         <label className="label">Username</label>
                         <div className="control has-icons-left has-icons-right">
@@ -56,12 +61,30 @@ const Signup = () => {
                         </div>
                     </div>
 
-                    <p className='error'>{userState.authError}</p>
+                    <div className="field">
+                        <label className="label">Confirm Password</label>
+                        <div className="control has-icons-left has-icons-right">
+                            <input
+                                className="input is-primary"
+                                type="password"
+                                placeholder="Password"
+                                value={confirmPassword}
+                                onChange={e => setConfirmPassword(e.target.value)}
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fa fa-lock" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <p>already have an account? <Link to="/">signin</Link></p>
+
+                    <p className='error'>{userState.signupError}</p>
 
                     <input
                         className="button is-primary"
                         type="submit"
-                        value="Sign In"
+                        value="Sign Up"
                     />
                 </form>
 

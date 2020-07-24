@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from 'react-router-dom';
 import userGlobal from '../../state/userState'
 import './style.scss'
 import bgimage from '../../images/bg.svg';
@@ -23,7 +24,7 @@ const Login = () => {
 
     return (
         <>
-            <h1 className="appname">Note Keeper</h1>
+            <h1 className="appname"><Link to="/home">Note Keeper </ Link></h1>
             <img className="bgimage" src={bgimage} />
             <div className='container login card'>
                 <form onSubmit={handleLogin}>
@@ -59,6 +60,7 @@ const Login = () => {
                             </span>
                         </div>
                     </div>
+                    <p>don't have an account? <Link to="/signup">sign up</Link></p>
 
                     <p className='error'>{userState.authError}</p>
 

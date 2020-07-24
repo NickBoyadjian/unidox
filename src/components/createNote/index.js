@@ -26,6 +26,7 @@ const CreateNote = () => {
                     <button className="delete" aria-label="close" onClick={hideModal} />
                 </header>
                 <section className="modal-card-body">
+                    <h1>Title:</h1>
                     <input
                         className='title'
                         value={title}

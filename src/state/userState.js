@@ -13,6 +13,7 @@ const initialState = {
     notes: [],
     jwt: '',
     authError: '',
+    signupError: '',
     currentNote: {
         id: undefined,
         title: undefined,
@@ -32,13 +33,21 @@ const actions = {
             .catch(err => store.setState({ authError: err.response.data.msg }))
     },
 
-    signup: (store, u, p) => {
+    signup: (store, u, p, cp) => {
+        if (p != cp) {
+            store.setState({ signupError: "passwords must match" })
+            return;
+        }
+
         axios.post(`${url}/auth/signup`, { "username": u, "password": p })
             .then(res => {
-                store.setState({ jwt: res.data.token, authError: '' }) // store it in state
-                localStorage.setItem('token', res.data.token)         // store it in localStorage
+                console.log(res)
+                store.setState({ jwt: res.data.token, signupError: '' }) // store it in state
+                localStorage.setItem('token', res.data.token)            // store it in localStorage
             })
-            .catch(err => store.setState({ authError: err.response.data.msg }))
+            .catch(err => {
+                store.setState({ signupError: err.response.data.msg })
+            })
     },
 
     logout: (store) => {

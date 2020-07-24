@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Route, Redirect } from 'react-router-dom';
 import userGlobal from '../../state/userState'
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -14,6 +15,7 @@ const Dashboard = (props) => {
     const [userState, userActions] = userGlobal()
 
     useEffect(() => {
+        userActions.getProfile();
         if (userState.jwt === '') {
             userActions.getToken();
         }
@@ -29,7 +31,7 @@ const Dashboard = (props) => {
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
                         <LeftMenu />
-                        <div className='pick-note'> Select a note </div>
+                        <div className='pick-note'> Select or create a note </div>
                     </SplitterLayout>
                 </div>
             </div>

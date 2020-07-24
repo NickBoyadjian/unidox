@@ -39,46 +39,51 @@ const LeftMenu = (props) => {
 
 
     return (
-            <div className='left-menu'>
-                <nav className="panel is-link">
-                    <h1 className="panel-heading">
-                        Notes
+        <div className='left-menu'>
+            <nav className="panel is-link">
+                <h1 className="panel-heading">
+                    Notes
                     </h1>
-                    <div className="panel-block">
-                        <button className="button is-link is-outlined is-fullwidth" onClick={showModal}>
+                <div className="panel-block">
+                    <button className="button is-link is-outlined is-fullwidth" onClick={showModal}>
                         Create new note
                         </button>
-                    </div>
-                    <CreateNote />
-                    <div className="panel-block">
-                        <p className="control has-icons-left">
+                </div>
+                <CreateNote />
+                {/* <div className="panel-block">
+                    <p className="control has-icons-left">
                         <input className="input" type="text" placeholder="Search" value={search} onChange={(e) => handleSearch(e.target.value)} />
                         <span className="icon is-left">
                             <i className="fa fa-search" aria-hidden="true"></i>
                         </span>
-                        </p>
-                    </div>
+                    </p>
+                </div> */}
 
-                    {
-                        notes.map(note => userState.currentNote.id == note.id
-                                    ? <div className="panel-block is-active note" key={note.id}>
-                                        <span className="panel-icon">
-                                        <i className="fa fa-book" aria-hidden="true"></i>
-                                        </span>
-                                        {note.title}
-                                    </div>
-                                    : <div className="panel-block note" onClick={() => userActions.getNote(note.id)} key={note.id}>
-                                        <span className="panel-icon">
-                                        <i className="fa fa-book" aria-hidden="true"></i>
-                                        </span>
-                                        {note.title}
-                                    </div>
-                        )
-                    }
-                    
-                    
-                </nav>
-            </div>
+                {
+                    notes.filter(note => note.title.includes(search)).map(note => userState.currentNote.id == note.id
+                        ? <div className="panel-block is-active note" key={note.id}>
+                            <span className="panel-icon">
+                                <i className="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            {note.title}
+                            <span
+                                onClick={() => userActions.deleteNote(userState.currentNote.id).then(r => userActions.getProfile())}
+                                className="delete-icon">
+                                <i className="fa fa-remove" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        : <div className="panel-block note" onClick={() => userActions.getNote(note.id)} key={note.id}>
+                            <span className="panel-icon">
+                                <i className="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            {note.title}
+                        </div>
+                    )
+                }
+
+
+            </nav>
+        </div>
     );
 }
 

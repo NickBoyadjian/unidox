@@ -22,3 +22,10 @@
 .is-active {
     background-color: $bg;
 }
+
+.delete-icon {
+    color: red;
+    text-align: right;
+    position: absolute;
+    right: 10px;
+}

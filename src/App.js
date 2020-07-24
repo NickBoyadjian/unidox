@@ -5,6 +5,7 @@ import Login from './components/login'
 import userGlobal from './state/userState'
 import Dashboard from './components/dashboard';
 import Signup from './components/signup';
+import Home from './components/home';
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -29,14 +30,15 @@ function App() {
     return (
       <Fragment>
         <Route path="/dashboard" exact component={Dashboard} />
-        <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+        <Redirect to="/dashboard" />
       </Fragment>
     )
   } else {
     return (
       <Fragment>
-        <Route path="/" exact component={Login} />
+        <Route path="/" exact component={Home} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/home" exact component={Home} />
         <Redirect to="/" />
       </Fragment>
     )
