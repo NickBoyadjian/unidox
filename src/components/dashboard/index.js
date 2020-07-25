@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Route, Redirect } from 'react-router-dom';
 import userGlobal from '../../state/userState'
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -8,9 +7,9 @@ import NavBar from '../navbar'
 import LeftMenu from '../leftMenu'
 import TextEditor from '../textEditor'
 
-import './style.scss'
+let cssLoaded = false;
 
-const Dashboard = (props) => {
+const Dashboard = () => {
 
     const [userState, userActions] = userGlobal()
 
@@ -22,7 +21,12 @@ const Dashboard = (props) => {
         if (userState.username === '') {
             userActions.getProfile();
         }
-    }, []);
+    }, [userActions, userState.jwt, userState.username]);
+
+    if (cssLoaded === false) {
+        cssLoaded = true;
+        import('./style.scss');
+    }
 
     if (!userState.currentNote.body) {
         return (

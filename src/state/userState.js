@@ -34,14 +34,13 @@ const actions = {
     },
 
     signup: (store, u, p, cp) => {
-        if (p != cp) {
+        if (p !== cp) {
             store.setState({ signupError: "passwords must match" })
             return;
         }
 
         axios.post(`${url}/auth/signup`, { "username": u, "password": p })
             .then(res => {
-                console.log(res)
                 store.setState({ jwt: res.data.token, signupError: '' }) // store it in state
                 localStorage.setItem('token', res.data.token)            // store it in localStorage
             })

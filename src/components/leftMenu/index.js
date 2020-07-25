@@ -8,9 +8,6 @@ const LeftMenu = (props) => {
 
     const [userState, userActions] = userGlobal();
     const [notes, setNotes] = useState([]);
-    const [search, setSearch] = useState("");
-
-    const height = window.innerHeight
 
     useEffect(() => {
         if (userState.jwt === '') {
@@ -19,7 +16,7 @@ const LeftMenu = (props) => {
         if (userState.username === '') {
             userActions.getProfile()
         }
-    });
+    }, [userActions, userState.jwt, userState.username]);
 
     useEffect(() => {
         setNotes(userState.notes)
@@ -28,13 +25,6 @@ const LeftMenu = (props) => {
     const showModal = () => {
         const modal = document.getElementById('create-note');
         modal.className = 'modal is-active';
-    }
-
-    const handleSearch = (value) => {
-        setSearch(value);
-        setNotes(userState.notes);
-        setNotes(notes.filter(note => note.title.includes(value)));
-
     }
 
 
@@ -50,17 +40,9 @@ const LeftMenu = (props) => {
                         </button>
                 </div>
                 <CreateNote />
-                {/* <div className="panel-block">
-                    <p className="control has-icons-left">
-                        <input className="input" type="text" placeholder="Search" value={search} onChange={(e) => handleSearch(e.target.value)} />
-                        <span className="icon is-left">
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </span>
-                    </p>
-                </div> */}
 
                 {
-                    notes.filter(note => note.title.includes(search)).map(note => userState.currentNote.id == note.id
+                    notes.map(note => userState.currentNote.id === note.id
                         ? <div className="panel-block is-active note" key={note.id}>
                             <span className="panel-icon">
                                 <i className="fa fa-book" aria-hidden="true"></i>

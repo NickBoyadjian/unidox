@@ -20,12 +20,12 @@ const Signup = () => {
         if (userState.jwt !== '') {
             userActions.getToken()
         }
-    }, []);
+    }, [userActions, userState.jwt]);
 
     return (
         <>
             <h1 className="appname">Note Keeper</h1>
-            <img className="bgimage" src={bgimage} />
+            <img className="bgimage" src={bgimage} alt="" />
             <div className='container login card'>
                 <form onSubmit={handleSignup}>
                     <h1>Sign In</h1>

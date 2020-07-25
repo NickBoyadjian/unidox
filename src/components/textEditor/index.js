@@ -14,7 +14,7 @@ import './style.scss'
 export default () => {
 
   const [userState, userActions] = userGlobal();
-  const [editorState, setEditorState] = React.useState( EditorState.createEmpty() );
+  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
   const handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -25,19 +25,8 @@ export default () => {
     return false;
   }
 
-  // componentDidMount() {
-  //   // Load editor data (raw js object) from local storage
-  //   const rawEditorData = this.getSavedEditorData();
-  //   if (rawEditorData !== null) {
-  //     const contentState = convertFromRaw(rawEditorData);
-  //     this.setState({
-  //       editorState: EditorState.createWithContent(contentState)
-  //     });
-  //   }
-  // }
 
   useEffect(() => {
-    console.log(userState.currentNote)
     if (userState.currentNote.body) {
       let state;
       if (userState.currentNote.body.body) {
@@ -49,10 +38,9 @@ export default () => {
     } else {
       setEditorState(RichUtils.createEmpty());
     }
-  }, [userState.currentNote.id]);
+  }, [userState.currentNote.id, userState.currentNote.body]);
 
   const saveDocument = () => {
-    console.log(editorState)
     userActions.updateNote(editorState)
   }
 
@@ -82,25 +70,25 @@ export default () => {
     <div>
       <div className='toolbar'>
         <BlockStyleControls
-            editorState={editorState}
-            onToggle={toggleBlockType}
-          />
-          <InlineStyleControls
-            editorState={editorState}
-            onToggle={toggleInlineStyle}
-          />
+          editorState={editorState}
+          onToggle={toggleBlockType}
+        />
+        <InlineStyleControls
+          editorState={editorState}
+          onToggle={toggleInlineStyle}
+        />
 
-          <button 
-            className='style-btn save button is-light'
-            onClick={saveDocument}
-          >
-            Save
+        <button
+          className='style-btn save button is-light'
+          onClick={saveDocument}
+        >
+          Save
           </button>
 
       </div>
       <div className="RichEditor-root">
-        <div 
-        className={className} 
+        <div
+          className={className}
         //onClick={focus}
         >
           <Editor

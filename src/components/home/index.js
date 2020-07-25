@@ -1,11 +1,14 @@
 import React from 'react';
 import bgimage from '../../images/bg.svg';
 import './style.scss'
+import { useHistory } from "react-router-dom";
 
 function Home() {
+  let history = useHistory();
+
   return (
-    <>
-      <img className="bgimage" src={bgimage} />
+    <div className="home">
+      <img className="bgimage" src={bgimage} alt="" />
       <div className="container">
 
         <section class="hero">
@@ -51,12 +54,23 @@ function Home() {
         <br /><br /><br />
 
         <div className="auth-buttons">
-          <button className="button">Sign In</button>
-          <button className="button">Sign Up</button>
+          <button
+            className="button is-link"
+            onClick={() => history.push("/")}>Sign In</button>
+          <button
+            className="button"
+            onClick={() => history.push("/signup")}>Sign Up</button>
         </div>
 
+        <footer>
+          <div class="content has-text-centered">
+            <p>
+              Made with <span role="img" aria-label="heart">❤️</span> by Nick Boyadjian
+            </p>
+          </div>
+        </footer>
       </div>
-    </>
+    </div>
   )
 }
 
