@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import userGlobal from '../../state/userState';
-
+import LeftMenu from '../leftMenu';
+import BlockStyleControls from '../textEditor/blockStyleControls';
+import InlineStyleControls from '../textEditor/inlineStyleControls';
 import './style.scss'
+import { RichUtils } from 'draft-js';
 
-const NavBar = () => {
+const NavBar = ({ editorState, setEditorState }) => {
 
     const [userState, userActions] = userGlobal();
+    const [menuState, setMenuState] = useState("");
+
+    const toggleMenu = () => {
+        setMenuState(menuState === "" ? "is-active" : "");
+    }
 
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -17,16 +25,14 @@ const NavBar = () => {
 
                 </div>
 
-                <a href="/login" onClick={() => userActions.logout()} role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <div className="icon">
-                        <i className="fa fa-power-off"></i>
-                    </div>
-                </a>
+                <div href="#" onClick={() => toggleMenu()} role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span /><span /><span />
+                </div>
             </div>
 
-            <div className="navbar-menu">
+            <div className={"navbar-menu " + menuState}>
 
-
+                <HamburgerMenu userState={userState} editorState={editorState} setEditorState={setEditorState} />
                 <div className="navbar-item has-dropdown is-hoverable navbar-end">
                     <div className="navbar-link" id='account'>{userState.username.charAt(0).toUpperCase() + userState.username.slice(1)}</div>
 
@@ -37,8 +43,31 @@ const NavBar = () => {
                     </div>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 }
 
 export default NavBar;
+
+const HamburgerMenu = ({ userState, editorState, setEditorState }) => {
+
+    return (
+        <div className="hamburger-menu">
+            <div className="controls">
+                <BlockStyleControls
+                    editorState={editorState}
+                    onToggle={(blockType) => {
+                        setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+                    }}
+                />
+                <InlineStyleControls
+                    editorState={editorState}
+                    onToggle={(inlineStyle) => {
+                        setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+                    }}
+                />
+            </div>
+            <LeftMenu />
+        </div>
+    )
+}

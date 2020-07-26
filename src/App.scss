@@ -5,3 +5,13 @@
     width: 100vw;
     transform: rotate(180deg);
 }
+
+@media (max-width: 1024px) {
+    .layout-splitter, .editor-container > div > .toolbar {
+        display:none;
+    }
+
+    .layout-pane:first-child {
+        display: none
+    }
+}

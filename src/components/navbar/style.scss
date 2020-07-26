@@ -13,3 +13,34 @@
         color: #f0324c
     }
 }
+
+.hamburger-menu {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .navbar-menu {
+        height: calc(100vh - 64px);
+        background-color: #aaa;
+        overflow: scroll;
+    }
+
+    .hamburger-menu {
+        display: contents;
+    }
+
+    .navbar-dropdown {
+        background-color: #505050;
+    }
+    .is-active {
+        display: block;
+    }
+
+    #account {
+        display: none;
+    }
+
+    .panel {
+        height: auto;
+    }
+}

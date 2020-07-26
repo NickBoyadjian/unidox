@@ -22,6 +22,7 @@ const LeftMenu = (props) => {
         setNotes(userState.notes)
     }, [userState.notes]);
 
+
     const showModal = () => {
         const modal = document.getElementById('create-note');
         modal.className = 'modal is-active';

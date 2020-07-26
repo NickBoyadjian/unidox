@@ -11,10 +11,9 @@ import InlineStyleControls from './inlineStyleControls'
 import userGlobal from '../../state/userState'
 import './style.scss'
 
-export default () => {
+export default ({ editorState, setEditorState }) => {
 
   const [userState, userActions] = userGlobal();
-  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
   const handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -38,7 +37,7 @@ export default () => {
     } else {
       setEditorState(RichUtils.createEmpty());
     }
-  }, [userState.currentNote.id, userState.currentNote.body]);
+  }, [userState.currentNote.id, userState.currentNote.body, setEditorState]);
 
   const saveDocument = () => {
     userActions.updateNote(editorState)

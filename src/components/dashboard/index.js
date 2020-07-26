@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import userGlobal from '../../state/userState'
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
+import { EditorState } from 'draft-js';
 
 import NavBar from '../navbar'
 import LeftMenu from '../leftMenu'
@@ -11,7 +12,8 @@ let cssLoaded = false;
 
 const Dashboard = () => {
 
-    const [userState, userActions] = userGlobal()
+    const [userState, userActions] = userGlobal();
+    const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
     useEffect(() => {
         userActions.getProfile();
@@ -31,7 +33,7 @@ const Dashboard = () => {
     if (!userState.currentNote.body) {
         return (
             <div className='dashboard'>
-                <NavBar />
+                <NavBar editorState={editorState} setEditorState={setEditorState} />
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
                         <LeftMenu />
@@ -43,11 +45,11 @@ const Dashboard = () => {
     } else {
         return (
             <div className='dashboard'>
-                <NavBar />
+                <NavBar editorState={editorState} setEditorState={setEditorState} />
                 <div className='editor-pane'>
                     <SplitterLayout primaryIndex={1} secondaryInitialSize={window.innerWidth / 6}>
                         <LeftMenu />
-                        <div className='editor-container'> <TextEditor /> </div>
+                        <div className='editor-container'> <TextEditor editorState={editorState} setEditorState={setEditorState} /> </div>
                     </SplitterLayout>
                 </div>
             </div>
