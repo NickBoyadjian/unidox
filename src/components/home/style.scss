@@ -34,3 +34,11 @@
     margin-top: 100px;
   }
 }
+
+@media (max-width: 1024px) {
+  .main-content {
+    margin: 0;
+    padding: 0;
+  }
+
+}

@@ -24,7 +24,7 @@ const Signup = () => {
 
     return (
         <>
-            <h1 className="appname">Note Keeper</h1>
+            <h1 className="appname"><Link to="/home">Unidox</ Link></h1>
             <img className="bgimage" src={bgimage} alt="" />
             <div className='container login card'>
                 <form onSubmit={handleSignup}>
@@ -33,7 +33,7 @@ const Signup = () => {
                         <label className="label">Username</label>
                         <div className="control has-icons-left has-icons-right">
                             <input
-                                className="input is-primary"
+                                className="input is-link"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -49,7 +49,7 @@ const Signup = () => {
                         <label className="label">Password</label>
                         <div className="control has-icons-left has-icons-right">
                             <input
-                                className="input is-primary"
+                                className="input is-link"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -65,7 +65,7 @@ const Signup = () => {
                         <label className="label">Confirm Password</label>
                         <div className="control has-icons-left has-icons-right">
                             <input
-                                className="input is-primary"
+                                className="input is-link"
                                 type="password"
                                 placeholder="Password"
                                 value={confirmPassword}
@@ -82,7 +82,7 @@ const Signup = () => {
                     <p className='error'>{userState.signupError}</p>
 
                     <input
-                        className="button is-primary"
+                        className="button is-link"
                         type="submit"
                         value="Sign Up"
                     />

@@ -15,7 +15,7 @@ function Home() {
           <div class="hero-body">
             <div class="container">
               <h1 class="title is-1">
-                Notekeeper
+                Unidox
               </h1>
               <h2 class="subtitle">
                 a better way to take notes
@@ -24,29 +24,29 @@ function Home() {
           </div>
         </section>
 
-        <div className="columns is ">
+        <div className="columns main-content">
           <div className="column">
             <div className="card">
-              <span class="icon has-text-primary">
-                <i class="fa fa-archive"></i>
+              <span class="icon has-text-link">
+                <i className="fa fa-archive"></i>
               </span>
             Store all your notes in a central repository for easy access and editing, no matter where you are.
             </div>
           </div>
           <div className="column">
             <div className="card">
-              <span class="icon has-text-primary">
-                <i class="fa fa-laptop"></i>
+              <span class="icon has-text-link">
+                <i className="fa fa-laptop"></i>
               </span>
-            Edit your files in a modern, sleek, and out of your way interface.
+            Edit your files in a modern, sleek, and out of your way interface that works just as well on mobile devices as the desktop.
             </div>
           </div>
           <div className="column">
             <div className="card">
-              <span class="icon has-text-primary">
-                <i class="fa fa-wpforms"></i>
+              <span class="icon has-text-link">
+                <i className="fa fa-wpforms"></i>
               </span>
-            With lots of formatting options, we have you covered no matter what kind of notes you're taking.
+            With a variety of formatting options, we have you covered no matter what kind of notes you're taking.
             </div>
           </div>
         </div>
@@ -62,13 +62,6 @@ function Home() {
             onClick={() => history.push("/signup")}>Sign Up</button>
         </div>
 
-        <footer>
-          <div class="content has-text-centered">
-            <p>
-              Made with <span role="img" aria-label="heart">❤️</span> by Nick Boyadjian
-            </p>
-          </div>
-        </footer>
       </div>
     </div>
   )

@@ -24,7 +24,7 @@ const Login = () => {
 
     return (
         <>
-            <h1 className="appname"><Link to="/home">Note Keeper </ Link></h1>
+            <h1 className="appname"><Link to="/home">Unidox</ Link></h1>
             <img className="bgimage" src={bgimage} alt="" />
             <div className='container login card'>
                 <form onSubmit={handleLogin}>
@@ -33,7 +33,7 @@ const Login = () => {
                         <label className="label">Username</label>
                         <div className="control has-icons-left has-icons-right">
                             <input
-                                className="input is-primary"
+                                className="input is-link"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -49,7 +49,7 @@ const Login = () => {
                         <label className="label">Password</label>
                         <div className="control has-icons-left has-icons-right">
                             <input
-                                className="input is-primary"
+                                className="input is-link"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -65,7 +65,7 @@ const Login = () => {
                     <p className='error'>{userState.authError}</p>
 
                     <input
-                        className="button is-primary"
+                        className="button is-link"
                         type="submit"
                         value="Sign In"
                     />

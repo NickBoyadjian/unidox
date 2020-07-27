@@ -19,7 +19,7 @@ const NavBar = ({ editorState, setEditorState }) => {
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <div className="navbar-item" href="https://bulma.io">
-                    <h1 className="title is-5"><b>Notekeeper</b>
+                    <h1 className="title is-5"><b>Unidox</b>
                         <p className="title is-6">{userState.currentNote.title}</p>
                     </h1>
 
@@ -32,7 +32,9 @@ const NavBar = ({ editorState, setEditorState }) => {
 
             <div className={"navbar-menu " + menuState}>
 
-                <HamburgerMenu userState={userState} editorState={editorState} setEditorState={setEditorState} />
+                <HamburgerMenu
+                    userState={userState} userActions={userActions}
+                    editorState={editorState} setEditorState={setEditorState} />
                 <div className="navbar-item has-dropdown is-hoverable navbar-end">
                     <div className="navbar-link" id='account'>{userState.username.charAt(0).toUpperCase() + userState.username.slice(1)}</div>
 
@@ -49,10 +51,11 @@ const NavBar = ({ editorState, setEditorState }) => {
 
 export default NavBar;
 
-const HamburgerMenu = ({ userState, editorState, setEditorState }) => {
+const HamburgerMenu = ({ userState, userActions, editorState, setEditorState }) => {
 
     return (
         <div className="hamburger-menu">
+            <button className="button save-note" onClick={() => userActions.updateNote(editorState)}>Save Note</button>
             <div className="controls">
                 <BlockStyleControls
                     editorState={editorState}

@@ -4,21 +4,21 @@ import bgimage from '../../images/bg.svg';
 
 import './style.scss';
 
-const CreateNote = () => {
+const CreateNote = ({ modalActiveClass, setModalActiveClass }) => {
 
     const [title, setTitle] = useState('');
     const [, userActions] = userGlobal();
 
-    const hideModal = () => { document.getElementById('create-note').className = 'modal' }
+    const hideModal = () => { setModalActiveClass("") }
 
     const createNote = async () => {
         await userActions.createNote(title)
-        hideModal()
+        setModalActiveClass("")
         userActions.getProfile()
     }
 
     return (
-        <div className="modal" id="create-note" style={{ 'background': '#fff' }}>
+        <div className={"modal " + modalActiveClass} id="create-note-modal" style={{ 'background': '#fff' }}>
             <img src={bgimage} className="bgimage" alt="" />
             <div className="modal-card" id="create-note">
                 <header className="modal-card-head">

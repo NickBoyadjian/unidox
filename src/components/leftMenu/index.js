@@ -8,6 +8,7 @@ const LeftMenu = (props) => {
 
     const [userState, userActions] = userGlobal();
     const [notes, setNotes] = useState([]);
+    const [modalActiveClass, setModalActiveClass] = useState("");
 
     useEffect(() => {
         if (userState.jwt === '') {
@@ -24,8 +25,7 @@ const LeftMenu = (props) => {
 
 
     const showModal = () => {
-        const modal = document.getElementById('create-note');
-        modal.className = 'modal is-active';
+        setModalActiveClass("is-active")
     }
 
 
@@ -40,7 +40,7 @@ const LeftMenu = (props) => {
                         Create new note
                         </button>
                 </div>
-                <CreateNote />
+                <CreateNote modalActiveClass={modalActiveClass} setModalActiveClass={setModalActiveClass} />
 
                 {
                     notes.map(note => userState.currentNote.id === note.id
