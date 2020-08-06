@@ -7,6 +7,6 @@ I wanted a better place to keep my notes for school, something that was simple t
 ## Technology
 You can find the backend code at <a href="#">unidox-api</a>. The frontend interface was built with React, utilizing
 1. Functional higher order components
-2. React Hooks and the useState api for state management
+2. React Hooks and the Context API for state management
 3. Draft.js for the text editor
 4. Sass and Bulma for styling
