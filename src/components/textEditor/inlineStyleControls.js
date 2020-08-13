@@ -14,7 +14,7 @@ const INLINE_STYLES = [
     style: 'UNDERLINE'
   }, {
     label: 'Highlight',
-    style: 'CODE'
+    style: 'HIGHLIGHT'
   }
 ];
 

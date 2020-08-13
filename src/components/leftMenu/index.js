@@ -44,7 +44,11 @@ const LeftMenu = (props) => {
 
                 {
                     notes.map(note => userState.currentNote.id === note.id
-                        ? <div className="panel-block is-active note" key={note.id}>
+                        ? <div
+                            style={{ color: "#252525" }}
+                            className="panel-block is-active note"
+                            key={note.id}
+                            onClick={() => userActions.setNoNote()}>
                             <span className="panel-icon">
                                 <i className="fa fa-book" aria-hidden="true"></i>
                             </span>

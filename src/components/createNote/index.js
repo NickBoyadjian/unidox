@@ -29,7 +29,7 @@ const CreateNote = ({ modalActiveClass, setModalActiveClass }) => {
                     {/* <h1>Title</h1> */}
                     <input
                         className='title input'
-                        placeholder="title"
+                        placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />

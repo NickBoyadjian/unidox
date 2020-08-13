@@ -28,7 +28,7 @@ const Signup = () => {
             <img className="bgimage" src={bgimage} alt="" />
             <div className='container login card'>
                 <form onSubmit={handleSignup}>
-                    <h1>Sign In</h1>
+                    <h1>Sign Up</h1>
                     <div className="field">
                         <label className="label">Username</label>
                         <div className="control has-icons-left has-icons-right">
@@ -67,7 +67,7 @@ const Signup = () => {
                             <input
                                 className="input is-link"
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={e => setConfirmPassword(e.target.value)}
                             />
@@ -77,7 +77,7 @@ const Signup = () => {
                         </div>
                     </div>
 
-                    <p>already have an account? <Link to="/">signin</Link></p>
+                    <p>already have an account? <Link to="/">sign in</Link></p>
 
                     <p className='error'>{userState.signupError}</p>
 

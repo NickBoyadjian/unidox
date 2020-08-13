@@ -9,7 +9,7 @@ const BLOCK_TYPES = [
     label: 'Section',
     style: 'header-two'
   }, {
-    label: 'OL',
+    label: 'List',
     style: 'ordered-list-item'
   }, {
     label: 'Code Block',

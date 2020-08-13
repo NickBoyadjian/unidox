@@ -53,6 +53,7 @@ div.toolbar {
     position: absolute;
     right: 0;
     width: 100px;
+    top: 0;
   }
 }
 
@@ -66,4 +67,13 @@ div.toolbar button {
 
 li {
   margin-left: 20px;
+}
+
+.public-DraftStyleDefault-pre {
+  border-radius: 5px;
+  padding: 5px
+}
+
+.public-DraftStyleDefault-pre > pre {
+  padding: 15px
 }

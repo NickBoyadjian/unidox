@@ -63,14 +63,28 @@ const actions = {
     getProfile: (store) => {
         store.setState({ jwt: localStorage.getItem('token') })
         axios.get(`${url}/auth/profile`, { headers: { Authorization: store.state.jwt } })
-            .then(res => store.setState({ username: res.data.username, notes: res.data.notes }))
+            .then(res => {
+                console.log(res.data)
+                store.setState({ username: res.data.username, notes: res.data.notes.reverse() })
+            })
     },
 
     getNote: async (store, id) => {
         await axios.get(`${url}/notes/note/${id}`, { headers: { Authorization: store.state.jwt } })
             .then(res => {
+                console.log(res.data)
                 store.setState({ currentNote: { id: res.data.id, title: res.data.title, body: res.data.body } })
             })
+    },
+
+    setNoNote: async (store) => {
+        store.setState({
+            currentNote: {
+                id: undefined,
+                title: undefined,
+                body: undefined
+            }
+        })
     },
 
     deleteNote: async (store, id) => {
